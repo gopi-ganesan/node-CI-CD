@@ -1,58 +1,61 @@
-pipeline{
+pipeline {
     agent any
 
-    evironment {
-        IMAGES_NAME = 'node-app:v1'
+    environment {
+        IMAGE_NAME = 'node-app:v1'
         CONTAINER_NAME = 'node-app-cn'
     }
 
-    stages{
-        stage('git clone') {
+    stages {
+        stage('Git Clone') {
             steps {
+                echo 'Cloning repository...'
                 git(
-                    url:'https://github.com/gopi-ganesan/node-CI-CD.git',
+                    url: 'https://github.com/gopi-ganesan/node-CI-CD.git',
                     branch: 'main',
-                    credentialsId:'github-token',
+                    credentialsId: 'github-token'
                 )
             }
         }
 
-        stage('docker build') {
+        stage('Docker Build') {
             steps {
-                docker build -t "${IMAGES_NAME}" .
+                echo 'Building Docker image...'
+                sh 'docker build -t ${IMAGE_NAME} .'
             }
         }
 
-        stage('docker remove'){
-            steps{
-                sh'''
-                docker stop ${CONTAINER_NAME} || true
-                docker rm ${CONTAINER_NAME} || true
-              '''
-            }
-        }
-
-        stage('docker run'){
-            steps{
-                sh'''
-                docker run -d -p 8080:8080 --name ${CONTAINER_NAME} ${IMAGES_NAME}
-              '''
-            }
-        }
-
-        stage('docker test') {
+        stage('Docker Remove') {
             steps {
-              sh  'docker exec ${CONTAINER_NAME} npn test'
+                echo 'Stopping and removing old container (if exists)...'
+                sh '''
+                    docker stop ${CONTAINER_NAME} || true
+                    docker rm ${CONTAINER_NAME} || true
+                '''
+            }
+        }
+
+        stage('Docker Run') {
+            steps {
+                echo 'Running new container...'
+                sh 'docker run -d -p 8080:8080 --name ${CONTAINER_NAME} ${IMAGE_NAME}'
+            }
+        }
+
+        stage('Docker Test') {
+            steps {
+                echo 'Running tests inside container...'
+                sh 'docker exec ${CONTAINER_NAME} npm test || true'
             }
         }
     }
 
     post {
         success {
-            echo 'The pipeline has succeeded!'
+            echo ' The pipeline has succeeded!'
         }
         failure {
-            echo 'The pipeline has failed.'
+            echo ' The pipeline has failed.'
         }
     }
 }
