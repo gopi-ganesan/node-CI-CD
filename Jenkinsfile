@@ -10,9 +10,9 @@ pipeline{
         stage('git clone') {
             steps {
                 git(
-                    url:'https://github.com/gopi-ganesan/node-CI-CD.git'
-                    bracnch:'main'
-                    credentialsId:'github-token'
+                    url:'https://github.com/gopi-ganesan/node-CI-CD.git',
+                    branch: 'main',
+                    credentialsId:'github-token',
                 )
             }
         }
