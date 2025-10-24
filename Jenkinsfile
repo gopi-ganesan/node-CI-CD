@@ -13,7 +13,7 @@ pipeline {
                 echo 'Cloning repository...'
                 git(
                     url: 'https://github.com/gopi-ganesan/node-CI-CD.git',
-                    branch: 'updata',
+                    branch: 'main',
                     credentialsId: 'github-token'
                 )
             }
