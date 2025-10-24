@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'node-app:v5'
-        CONTAINER_NAME = 'node-app-c5'
+        IMAGE_NAME = 'node-app:v6'
+        CONTAINER_NAME = 'node-app-c6'
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-cred')
     }
 
@@ -39,7 +39,7 @@ pipeline {
         stage('Docker Run') {
             steps {
                 echo 'Running new container...'
-                sh 'docker run -d -p 8081:8000 --name ${CONTAINER_NAME} ${IMAGE_NAME}'
+                sh 'docker run -d -p 8081:3000 --name ${CONTAINER_NAME} ${IMAGE_NAME}'
             }
         }
 
