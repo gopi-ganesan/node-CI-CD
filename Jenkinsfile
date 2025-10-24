@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'node-app:v3'
-        CONTAINER_NAME = 'node-app-c3'
+        IMAGE_NAME = 'node-app:v4'
+        CONTAINER_NAME = 'node-app-c4'
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-cred')
     }
 
