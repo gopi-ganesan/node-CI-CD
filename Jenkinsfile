@@ -39,7 +39,7 @@ pipeline {
         stage('Docker Run') {
             steps {
                 echo 'Running new container...'
-                sh 'docker run -d -p 8080:8080 --name ${CONTAINER_NAME} ${IMAGE_NAME}'
+                sh 'docker run -d -p 8081:8000 --name ${CONTAINER_NAME} ${IMAGE_NAME}'
             }
         }
 
