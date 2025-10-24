@@ -2,8 +2,8 @@ pipeline {
     agent any
 
     environment {
-        IMAGE_NAME = 'node-app:v4'
-        CONTAINER_NAME = 'node-app-c4'
+        IMAGE_NAME = 'node-app:v5'
+        CONTAINER_NAME = 'node-app-c5'
         DOCKERHUB_CREDENTIALS = credentials('dockerhub-cred')
     }
 
@@ -13,7 +13,7 @@ pipeline {
                 echo 'Cloning repository...'
                 git(
                     url: 'https://github.com/gopi-ganesan/node-CI-CD.git',
-                    branch: 'main',
+                    branch: 'updata',
                     credentialsId: 'github-token'
                 )
             }
